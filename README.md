@@ -1,62 +1,37 @@
-# NextJS Vercel AI Chatbot
+# GPT-Clone
 
-A modern AI chatbot built with Next.js and Vercel AI SDK, featuring multiple AI model support and real-time streaming responses.
+A modern AI chatbot built using Next.js and the Vercel AI SDK. Supports real-time streaming responses, clean UI, and multiple AI providers like OpenAI.
 
-<img src="https://github.com/user-attachments/assets/8fe9dd7a-93a4-474c-9212-6fc896c2c9f0" alt="Video Thumbnail">
+## 🧰 Tech Stack
 
-## 🎥 View
+- [Next.js 15](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vercel AI SDK](https://sdk.vercel.ai/docs)
+- [OpenAI API](https://platform.openai.com/)
 
-Watch the video: [YouTube](https://youtu.be/IWiGE2bBl2I)
+---
 
-## ✨ Features
+## 🛠️ Getting Started
 
-- 🤖 Multiple AI model support (OpenAI, Gemini)
-- ⚡ Real-time streaming responses
-- 📱 Responsive design
-- 🎨 Modern UI with Tailwind CSS
+### 1. Clone the Repository
 
-## 💻 Tech Stack
+## Deployment
 
-- **Next.js 15**
-- **TypeScript**
-- **Tailwind CSS**
-- **Vercel AI SDK**
-- **OpenAI API**
-- **Google Gemini API**
+To deploy this project run
 
-## 🛠️ Installation
+```bash
+git clone https://github.com/PriyanshYawalkar/gpt-clone.git
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Shreyas-29/nextjs-vercel-chatbot.git
-   ```
+cd nextjs-vercel-chatbot
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   ```
+npm -i install
 
-3. Update `.env.example` file:
-   ```env
-   GOOGLE_GENERATIVE_AI_API_KEY=""
-   OPENAI_API_KEY=""
-   ```
+npm run dev
+```
 
-4. Run the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
+## Environment Variables
 
-5. Open [http://localhost:3000](http://localhost:3000)
+To run this project, you will need to add the following environment variables to your .env file
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+`OPENAI_API_KEY: ENTER YOUR KEY`
