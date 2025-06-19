@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Vercel AI Chatbot",
-  description: "Vercel AI Chatbot",
+  title: "GPT-CLONE",
+  description: "Vercel SDK AI",
 };
 
 export default function RootLayout({
