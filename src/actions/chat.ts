@@ -23,7 +23,9 @@ export const chat = async (_messages: { role: string; content: string }[]) => {
       stream.done();
     } catch (err) {
       console.error("OpenAI API error:", err);
-      stream.update("Sorry, there was an error getting a response.");
+      stream.update(
+        "Sorry, our API credit limit is over please create an .env file with OPENAI_API_KEY and add your API key."
+      );
       stream.done();
     }
   })();
