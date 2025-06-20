@@ -22,6 +22,11 @@ export type Message = {
     content: string;
 };
 
+type ChatbotProps = {
+    messages: Message[];
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+};
+
 const prompts = [
     {
         icon: <CalculatorIcon strokeWidth={1.8} className="size-5" />,
@@ -41,15 +46,14 @@ const prompts = [
     },
 ];
 
-const Chatbot = () => {
+const Chatbot: React.FC<ChatbotProps> = ({ messages, setMessages }) => {
     const messageEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [input, setInput] = useState<string>("");
-    const [conversation, setConversation] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [hasStartedChat, setHasStartedChat] = useState<boolean>(false);
+    const hasStartedChat = messages.length > 0;
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,7 +61,7 @@ const Chatbot = () => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [conversation]);
+    }, [messages]);
 
     const handlePromptClick = (text: string) => {
         setInput(text);
@@ -76,19 +80,18 @@ const Chatbot = () => {
 
         setInput("");
         setIsLoading(true);
-        setConversation(prev => [...prev, userMessage]);
-        setHasStartedChat(true);
+        setMessages((prev: Message[]) => [...prev, userMessage]);
 
         try {
-            const { newMessage } = await chat([...conversation, userMessage]);
+            const { newMessage } = await chat([...messages, userMessage]);
 
             let textContent = "";
             const assistantMessage: Message = { role: "assistant", content: "" };
-            setConversation(prev => [...prev, assistantMessage]);
+            setMessages((prev: Message[]) => [...prev, assistantMessage]);
 
             for await (const delta of readStreamableValue(newMessage)) {
                 textContent += delta;
-                setConversation(prev => {
+                setMessages((prev: Message[]) => {
                     const updated = [...prev];
                     updated[updated.length - 1] = {
                         role: "assistant",
@@ -100,7 +103,7 @@ const Chatbot = () => {
 
         } catch (error) {
             console.error("Error: ", error);
-            setConversation(prev => [...prev, {
+            setMessages((prev: Message[]) => [...prev, {
                 role: "assistant",
                 content: "Sorry, there was an error. Please try again.",
             }]);
@@ -119,10 +122,10 @@ const Chatbot = () => {
                 role: "user",
                 content: `Uploaded file: [${file.name}](${url})`,
             };
-            setConversation(prev => [...prev, userMessage]);
+            setMessages((prev: Message[]) => [...prev, userMessage]);
         } catch (error) {
             console.error("Upload error", error);
-            setConversation(prev => [...prev, {
+            setMessages((prev: Message[]) => [...prev, {
                 role: "assistant",
                 content: "File upload failed. Please try again.",
             }]);
@@ -165,7 +168,7 @@ const Chatbot = () => {
                         transition={{ duration: 0.2 }}
                         className="pt-8 space-y-4"
                     >
-                        {conversation.map((message, index) => (
+                        {messages.map((message, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 20 }}

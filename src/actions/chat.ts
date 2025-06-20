@@ -2,11 +2,12 @@
 
 import { createStreamableValue } from "ai/rsc";
 import OpenAI from "openai";
+import type { ChatCompletionMessageParam } from "openai/resources";
 
 // Make sure your environment variable is set
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
-export const chat = async (_messages: { role: string; content: string }[]) => {
+export const chat = async (_messages: ChatCompletionMessageParam[]) => {
   const stream = createStreamableValue<string>();
   (async () => {
     try {

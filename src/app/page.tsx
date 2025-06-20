@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Chatbot from "@/components/chat-box"
 import Sidebar, { Conversation } from "@/components/ui/sidebar";
 import { Menu, X } from "lucide-react";
+import type { Message } from "@/components/chat-box";
 
 const initialConversations: Conversation[] = [];
 
@@ -26,6 +27,29 @@ const HomePage = () => {
   const handleDelete = (id: string) => {
     setConversations(conversations => conversations.filter(conv => conv.id !== id));
     if (activeId === id) setActiveId(null);
+  };
+
+  // Handler to create a new chat
+  const handleNewChat = () => {
+    const newId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const newConv = { id: newId, title: "New Chat", messages: [] };
+    setConversations(convs => [newConv, ...convs]);
+    setActiveId(newId);
+    setSidebarOpen(false);
+  };
+
+  // Find the active conversation
+  const activeConversation = conversations.find(c => c.id === activeId);
+
+  // Setter for messages in the active conversation
+  const setMessages: React.Dispatch<React.SetStateAction<Message[]>> = (value) => {
+    setConversations(convs =>
+      convs.map(conv =>
+        conv.id === activeId
+          ? { ...conv, messages: typeof value === "function" ? value(conv.messages) : value }
+          : conv
+      )
+    );
   };
 
   return (
@@ -65,10 +89,14 @@ const HomePage = () => {
             }}
             onRename={handleRename}
             onDelete={handleDelete}
+            onNewChat={handleNewChat}
           />
         </aside>
         <div className="flex-1 h-full">
-          <Chatbot />
+          <Chatbot
+            messages={activeConversation?.messages ?? []}
+            setMessages={setMessages}
+          />
         </div>
       </div>
     </main>

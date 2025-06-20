@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import type { Message } from "@/components/chat-box";
 
 export type Conversation = {
     id: string;
     title: string;
+    messages: Message[];
 };
 
 type SidebarProps = {
@@ -30,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <h2 className="font-bold mb-4">Conversations</h2>
             <button
                 className="w-full mb-4 py-2 px-3 rounded bg-blue-600 text-white font-semibold hover:bg-blue-300 transition"
-                onClick={(onNewChat) => console.log("New Chat Initiated if its not working reload the page.")}
+                onClick={onNewChat}
             >
                 + New Chat
             </button>
