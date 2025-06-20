@@ -103,12 +103,6 @@ Visit [http://localhost:3000](http://localhost:3000) to use your chatbot!
 
 ---
 
-## 🖼️ Screenshots
-
-> _Add screenshots here for a more visual README!_
-
----
-
 ## 🧩 Customization
 
 - **Model**: Change the model in `src/actions/chat.ts` (`gpt-4o` by default).
